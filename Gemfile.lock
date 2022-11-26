@@ -382,6 +382,8 @@ GEM
     retriable (3.1.2)
     rexml (3.2.5)
     rollbar (3.3.2)
+    rss (0.2.9)
+      rexml
     rubocop (1.37.1)
       json (~> 2.3)
       parallel (~> 1.10)
@@ -580,6 +582,7 @@ DEPENDENCIES
   ransack
   react-rails
   rollbar
+  rss
   rubocop
   rubocop-fjord (~> 0.2.0)
   rubocop-minitest
