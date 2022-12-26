@@ -29,7 +29,7 @@ class Scheduler::DailyController < SchedulerController
       next unless rss_items
 
       rss_items.each do |item|
-        return if ExternalEntry.find_by(url: item.link)
+        next if ExternalEntry.find_by(url: item.link)
 
         ExternalEntry.save_rss_feed(user, item)
       end

@@ -25,6 +25,15 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def vcr_options
+    {
+      record: :once,
+      match_requests_on: [
+        :method,
+        VCR.request_matchers.uri_without_param(:source)
+      ]
+    }
+  end
 end
 
 class ActionDispatch::IntegrationTest
