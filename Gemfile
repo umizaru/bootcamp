@@ -52,13 +52,13 @@ gem 'rails-i18n', '~> 6.0.0'
 gem 'ransack'
 gem 'react-rails'
 gem 'rollbar'
+gem 'rss'
 gem 'rubyzip'
 gem 'slim-rails'
 gem 'sorcery', '~> 0.16.2'
 gem 'sorcery-jwt'
 gem 'stripe'
 gem 'stripe-i18n', git: 'https://github.com/komagata/stripe-i18n', branch: 'update-depencency'
-gem 'rss'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

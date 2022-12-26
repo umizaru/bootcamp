@@ -6,6 +6,7 @@ class Scheduler::DailyController < SchedulerController
     notify_product_review_not_completed
     Question.notify_certain_period_passed_after_last_answer
     head :ok
+    fetch_and_save_rss_feeds
   end
 
   private
@@ -15,6 +16,22 @@ class Scheduler::DailyController < SchedulerController
       product = product_comment.commentable
       if product_comment.certain_period_passed_since_the_last_comment_by_submitter?(5.days) && !product.unassigned? && !product.checked?
         DiscordNotifier.with(comment: product_comment).product_review_not_completed.notify_now
+      end
+    end
+  end
+
+  def fetch_and_save_rss_feeds
+    users = User.where(retired_on: nil)
+
+    users.each do |user|
+      rss_items = ExternalEntry.parse_rss_feed(user.feed_url)
+
+      next unless rss_items
+
+      rss_items.each do |item|
+        return if ExternalEntry.find_by(url: item.link)
+
+        ExternalEntry.save_rss_feed(user, item)
       end
     end
   end
