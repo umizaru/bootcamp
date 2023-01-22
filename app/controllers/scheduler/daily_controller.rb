@@ -21,7 +21,7 @@ class Scheduler::DailyController < SchedulerController
   end
 
   def fetch_and_save_rss_feeds
-    users = User.where(retired_on: nil)
+    users = User.unretired
 
     users.each do |user|
       rss_items = ExternalEntry.parse_rss_feed(user.feed_url)
