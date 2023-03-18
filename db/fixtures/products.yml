@@ -140,3 +140,11 @@ product70:
   created_at: <%= 23.hour.ago %>
   updated_at: <%= 23.hour.ago %>
   published_at: <%= 23.hour.ago %>
+
+product71:
+  practice: practice10
+  user: kimura
+  body: 担当者のいる提出物です。
+  published_at: <%= (now - 60 * 60 * 24 * 2).to_formatted_s(:db) %>
+  created_at: <%= (now - 60 * 60 * 24 * 2).to_formatted_s(:db) %>
+  checker_id: "<%= ActiveRecord::FixtureSet.identify(:machida) %>"
