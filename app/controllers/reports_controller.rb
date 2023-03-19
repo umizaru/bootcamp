@@ -52,6 +52,7 @@ class ReportsController < ApplicationController
     canonicalize_learning_times(@report)
     if @report.save
       Newspaper.publish(:report_create, @report.user)
+      Newspaper.publish(:report_save, @report) if report.saved_changes?
       redirect_to redirect_url(@report), notice: notice_message(@report), flash: flash_contents(@report)
     else
       render :new
@@ -65,6 +66,7 @@ class ReportsController < ApplicationController
     canonicalize_learning_times(@report)
     if @report.save
       Newspaper.publish(:report_update, @report.user)
+      Newspaper.publish(:report_save, @report) if report.saved_changes?
       redirect_to redirect_url(@report), notice: notice_message(@report), flash: flash_contents(@report)
     else
       render :edit
