@@ -105,14 +105,6 @@ class NotificationMailer < ApplicationMailer # rubocop:disable Metrics/ClassLeng
     mail to: @user.email, subject: subject
   end
 
-  # required params: report, receiver
-  def consecutive_sad_report
-    @user = @receiver
-    @notification = @user.notifications.find_by(link: "/reports/#{@report.id}")
-    mail to: @user.email,
-         subject: "[FBC] #{@report.user.login_name}さんが#{User::DEPRESSED_SIZE}回連続でsadアイコンの日報を提出しました。"
-  end
-
   def assigned_as_checker
     @user = @receiver
     @notification = @user.notifications.find_by(link: "/products/#{@product.id}")

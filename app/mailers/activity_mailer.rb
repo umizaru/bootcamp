@@ -12,6 +12,7 @@ class ActivityMailer < ApplicationMailer
     @question = params[:question] if params&.key?(:question)
     @mentionable = params[:mentionable] if params&.key?(:mentionable)
     @page = params[:page] if params&.key?(:page)
+    @report = params[:report] if params&.key?(:report)
   end
 
   # required params: sender, receiver
@@ -207,6 +208,23 @@ class ActivityMailer < ApplicationMailer
     )
     subject = "[FBC] #{@report.user.login_name}さんが日報【 #{@report.title} 】を書きました！"
 
+    message = mail to: @user.email, subject: subject
+    message.perform_deliveries = @user.mail_notification? && !@user.retired?
+
+    message
+  end
+
+  # required params: report, receiver
+  def consecutive_sad_report(args = {})
+    @receiver ||= args[:receiver]
+    @report ||= args[:report]
+
+    @user = @receiver
+    @link_url = notification_redirector_url(
+      link: "/reports/#{@report.id}",
+      kind: Notification.kinds[:consecutive_sad_report]
+    )
+    subject = "[FBC] #{@report.user.login_name}さんが#{User::DEPRESSED_SIZE}回連続でsadアイコンの日報を提出しました。"
     message = mail to: @user.email, subject: subject
     message.perform_deliveries = @user.mail_notification? && !@user.retired?
 

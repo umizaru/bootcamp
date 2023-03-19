@@ -71,16 +71,6 @@ class NotificationFacade
     ).chose_correct_answer.deliver_later(wait: 5)
   end
 
-  def self.consecutive_sad_report(report, receiver)
-    ActivityNotifier.with(report: report, receiver: receiver).consecutive_sad_report.notify_now
-    return unless receiver.mail_notification? && !receiver.retired?
-
-    NotificationMailer.with(
-      report: report,
-      receiver: receiver
-    ).consecutive_sad_report.deliver_later(wait: 5)
-  end
-
   def self.assigned_as_checker(product, receiver)
     ActivityNotifier.with(product: product, receiver: receiver).assigned_as_checker.notify_now
     return unless receiver.mail_notification? && !receiver.retired?
