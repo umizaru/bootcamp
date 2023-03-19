@@ -13,20 +13,23 @@ class Notification::ReportsTest < ApplicationSystemTestCase
   end
 
   test 'the first daily report notification is sent only to mentors' do
-    report = users(:muryou).reports.create!(
-      title: '初日報です',
-      description: '初日報の内容です',
-      reported_on: Date.current
-    )
+    visit_with_auth '/reports/new', 'muryou'
+    within('form[name=report]') do
+      fill_in('report[title]', with: 'test title')
+      fill_in('report[description]', with: 'test')
+      fill_in('report[reported_on]', with: Time.current)
+    end
+    within('.learning-time__started-at') do
+      select '07'
+      select '30'
+    end
+    within('.learning-time__finished-at') do
+      select '08'
+      select '30'
+    end
 
-    Notification.create!(
-      kind: 7,
-      user: users(:komagata),
-      sender: users(:muryou),
-      message: "#{users(:muryou).login_name}さんがはじめての日報を書きました！",
-      link: "/reports/#{report.id}",
-      read: false
-    )
+    click_button '提出'
+    assert_text '日報を保存しました。'
 
     notification_message = 'muryouさんがはじめての日報を書きました！'
     visit_with_auth '/notifications', 'machida'
