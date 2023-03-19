@@ -26,4 +26,7 @@ header.page-header
                   id: 'js-choices-single-select'
   .page-content.is-books
     .container
-      div(data-vue="Books" data-vue-is-admin:boolean="#{current_user.admin?}" data-vue-is-mentor:boolean="#{current_user.mentor?}" data-vue-practice-id:number="#{params[:practice_id]}")
+      #js-books(
+        data-vue-is-admin:boolean=current_user.admin?
+        data-vue-is-mentor:boolean=current_user.mentor?
+        data-vue-practice-id:number="#{params[:practice_id]}")

@@ -1,5 +1,9 @@
 <template lang="pug">
 .books
+  .hoge
+    // まずはchoices-jsのUIのことは気にせずselect要素から一覧をfilterするようにしたい
+    select
+      option(v-for='practice in practices' :value='practice.title' :key='practice.id') {{practice.title}}
   .empty(v-if='books === null')
     .fa-solid.fa-spinner.fa-pulse
     |
@@ -45,6 +49,10 @@ export default {
     booksAPI() {
       const params = this.newParams
       return `/api/books.json?${params}`
+    },
+    practices() {
+      // return this.$store.state.practices
+      return this.$store.getters.filterQueryById
     }
   },
   created() {
@@ -52,6 +60,7 @@ export default {
       location.replace(location.href)
     }
     this.getBooks()
+    this.getPractices()
   },
   methods: {
     token() {
@@ -81,6 +90,9 @@ export default {
         .catch((error) => {
           console.warn(error)
         })
+    },
+    getPractices() {
+      this.$store.dispatch('getAllPractices')
     }
   }
 }
