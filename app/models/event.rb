@@ -158,4 +158,8 @@ class Event < ApplicationRecord
     participations.disabled
                   .order(created_at: :asc)
   end
+
+  def update_published_at
+    update_column(:published_at, updated_at) if !wip? && published_at.nil?
+  end
 end
