@@ -160,6 +160,6 @@ class Event < ApplicationRecord
   end
 
   def update_published_at
-    update_column(:published_at, updated_at) if !wip? && published_at.nil?
+    update_column(:published_at, updated_at) if !wip? && published_at.nil? # rubocop:disable Rails/SkipsModelValidations
   end
 end
