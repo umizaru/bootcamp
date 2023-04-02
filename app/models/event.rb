@@ -60,23 +60,23 @@ class Event < ApplicationRecord
   end
 
   def participants
-    first_come_first_served.limit(capacity)
+    users.where('participations.enable = true').order(created_at: :asc)
   end
 
   def waitlist
-    first_come_first_served - participants
+    users.where('participations.enable = false').order(created_at: :asc)
   end
 
   def participants_count
-    users.size > capacity ? capacity : users.size
+    participants.count
   end
 
   def waitlist_count
-    users.size > capacity ? users.size - capacity : 0
+    waitlist.count
   end
 
   def can_participate?
-    first_come_first_served.count < capacity
+    participants_count < capacity
   end
 
   def cancel_participation!(user)
@@ -114,6 +114,14 @@ class Event < ApplicationRecord
 
   def holding_tomorrow?
     start_at.to_date == Date.tomorrow
+  end
+
+  def can_move_up_the_waitlist?
+    waitlist_count.positive? && can_participate?
+  end
+
+  def not_wip?
+    !wip?
   end
 
   private
