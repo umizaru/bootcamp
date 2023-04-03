@@ -126,3 +126,8 @@ comment41:
   user: machida
   commentable: announcement1 (Announcement)
   description: "お知らせのコメントです。"
+
+comment42: 
+  user: machida
+  commentable: regular_event1 (RegularEvent)
+  description: "定期イベントのコメントです。"
