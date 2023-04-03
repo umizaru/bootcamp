@@ -83,6 +83,15 @@ regular_event9:
   end_at: <%= Time.zone.local(2020, 1, 1, 22, 0, 0) %>
   user: komagata
 
+regular_event27:
+  title: 定期イベントの検索結果テスト用
+  description: 定期イベントの検索結果テスト用
+  finished: false
+  hold_national_holiday: true
+  start_at: <%= Time.zone.local(2020, 1, 1, 21, 0, 0) %>
+  end_at: <%= Time.zone.local(2020, 1, 1, 22, 0, 0) %>
+  user: komagata
+
 <% (10..26).each do |i| %>
 regular_event<%= i %>:
   title: 定期イベント<%= i %>
